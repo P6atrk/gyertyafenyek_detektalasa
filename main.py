@@ -131,9 +131,7 @@ SHOW_TRACKBARS = True # Lehet a Threshold-ot es a Floodfill fuggveny bemeneti er
 CONTOUR_COLOR = [255, 0, 255]
 CIRCLE_COLOR = [0, 255, 0]
 
-img = None
-
-img_data = img_data_0
+img_data = img_data_0 # ITT LEHET MODOSITANI MILYEN KEPET KAP AZ ALGORITMUS
 
 find_candles(img_data[0], img_data[1], img_data[2])
 if SHOW_TRACKBARS:
