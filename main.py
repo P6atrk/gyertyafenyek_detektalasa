@@ -36,7 +36,7 @@ def flood_fill_trackbar(val):
 
 def threshold_brightest_spot(val, img):
 	img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
-	y, u, v = cv2.split(img_yuv)
+	y, _, _ = cv2.split(img_yuv)
 	max_val = np.max(y)
 	_, y_thresh = cv2.threshold(y, max_val - val, max_val, cv2.THRESH_TOZERO)
 	if SHOW_BRIGHTEST_SPOTS:
@@ -111,14 +111,15 @@ def noise_reduction(img):
 
 # kepek betoltese
 img0 = cv2.imread("573px-Candles_in_the_church.jpg")
-#img1 = cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")
-#img2 = cv2.imread("640px-Candles_in_the_dark.jpg")
-#img3 = cv2.imread("gyertyak.jpg")
-#img4 = cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")
-#img5 = cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")
-#img6 = cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")
-#img7 = cv2.imread("aroma-candles-500x500.jpg")
-#img8 = cv2.imread("510557_shutterstock_540141442.jpg")
+img1 = cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")
+img2 = cv2.imread("640px-Candles_in_the_dark.jpg")
+img3 = cv2.imread("gyertyak.jpg")
+img4 = cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")
+img5 = cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")
+img6 = cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")
+img7 = cv2.imread("aroma-candles-500x500.jpg")
+img8 = cv2.imread("510557_shutterstock_540141442.jpg")
+img9 = cv2.imread("panoramio.jpg")
 
 SHOW_CONTOURS = False # Konturok kirajzolasa az eredeti kepen
 ADD_SALT_PEPPER_NOISE = False # Noise hozzadasa a vizsgalando kephez
@@ -136,12 +137,12 @@ fill_diff_val = 0
 img = None
 
 if SHOW_TRACKBARS:
-	img = img0 # img0 modositasaval mas kepet lehet trackbar-okkal megjeleniteni
+	img = img8 # img0 modositasaval mas kepet lehet trackbar-okkal megjeleniteni
 	find_candles(threshold_val, fill_diff_val, img)
 	cv2.createTrackbar("threshold", "img", 0, 200, threshold_trackbar)
 	cv2.createTrackbar("value_diff", "img", 0, 50, flood_fill_trackbar)
 else: # valtoztatni lehet melyik kep jelenik meg, eloszor be KELL oket tolteni fentebb
-	find_candles(4, 14, img0)
+	#find_candles(4, 14, img0)
 	#find_candles(14, 1, img1)
 	#find_candles(2, 1, img2)
 	#find_candles(3, 1, img3)
@@ -149,7 +150,7 @@ else: # valtoztatni lehet melyik kep jelenik meg, eloszor be KELL oket tolteni f
 	#find_candles(1, 8, img5)
 	#find_candles(19, 5, img6)
 	#find_candles(10, 2, img7)
-	#find_candles(16, 15, img8)
+	find_candles(16, 15, img8)
 
 cv2.waitKey(0)
 
