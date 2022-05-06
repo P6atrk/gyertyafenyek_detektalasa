@@ -9,7 +9,6 @@ def find_candles(threshold_val, fill_diff_val, img):
 	img_original = img.copy()
 	
 	#img = noise_reduction(img) # ez nem tul hasznos, csak ront a kereses minosegen
-	#brightest = threshold_brightest_spot(threshold_val, img)
 	brightest = threshold_brightest_spot(threshold_val, img)
 	mask = flood_fill(brightest, fill_diff_val, img)
 	mask = morphology_filter(mask)
@@ -50,7 +49,7 @@ def flood_fill(src, fill_diff, img):
 	hi_diff = [fill_diff, fill_diff, fill_diff]
 	for i in range(len(non_zeros)):
 		_, src, mask, _ = cv2.floodFill(img, mask, non_zeros[i], None, lo_diff, hi_diff, 8 | (255 << 8) | cv2.FLOODFILL_MASK_ONLY | cv2.FLOODFILL_FIXED_RANGE)
-	mask = mask[1:len(mask) - 1, 1:len(mask[0]) - 1] # levágja a külső részét a masknak amik 1esek
+	mask = mask[1:len(mask) - 1, 1:len(mask[0]) - 1]
 	return mask
 
 def find_contours(src, img, draw_contours):
@@ -109,17 +108,6 @@ def noise_reduction(img):
 	img = cv2.blur(img, (5, 5))
 	return img
 
-# kepek betoltese
-img_data_0 = [4, 14, cv2.imread("573px-Candles_in_the_church.jpg")]
-img_data_1 = [14, 1, cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")]
-img_data_2 = [2, 1, cv2.imread("640px-Candles_in_the_dark.jpg")]
-img_data_3 = [3, 1, cv2.imread("gyertyak.jpg")]
-img_data_4 = [4, 1, cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")]
-img_data_5 = [1, 8, cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")]
-img_data_6 = [19, 5, cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")]
-img_data_7 = [10, 2, cv2.imread("aroma-candles-500x500.jpg")]
-img_data_8 = [16, 15, cv2.imread("510557_shutterstock_540141442.jpg")]
-
 SHOW_CONTOURS = False # Konturok kirajzolasa az eredeti kepen
 ADD_SALT_PEPPER_NOISE = False # Noise hozzadasa a vizsgalando kephez
 ADD_ADDITIVE_NOISE = False # Szinten
@@ -130,6 +118,16 @@ SHOW_TRACKBARS = True # Lehet a Threshold-ot es a Floodfill fuggveny bemeneti er
 
 CONTOUR_COLOR = [255, 0, 255]
 CIRCLE_COLOR = [0, 255, 0]
+
+img_data_0 = [4, 14, cv2.imread("573px-Candles_in_the_church.jpg")]
+img_data_1 = [14, 1, cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")]
+img_data_2 = [2, 1, cv2.imread("640px-Candles_in_the_dark.jpg")]
+img_data_3 = [3, 1, cv2.imread("gyertyak.jpg")]
+img_data_4 = [4, 1, cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")]
+img_data_5 = [1, 8, cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")]
+img_data_6 = [19, 5, cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")]
+img_data_7 = [10, 2, cv2.imread("aroma-candles-500x500.jpg")]
+img_data_8 = [16, 15, cv2.imread("510557_shutterstock_540141442.jpg")]
 
 img_data = img_data_0 # ITT LEHET MODOSITANI MILYEN KEPET KAP AZ ALGORITMUS
 
