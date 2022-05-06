@@ -22,17 +22,17 @@ def find_candles(threshold_val, fill_diff_val, img):
 		cv2.imshow("mask", mask)
 	cv2.imshow("img", img_original)
 
-def threshold_trackbar(val):
-	global img, threshold_val, fill_diff_val
-	threshold_val = val
-	img_copy = img.copy()
-	find_candles(threshold_val, fill_diff_val, img_copy)
+def threshold_trackbar(threshold_val):
+	global img_data
+	img_data[0] = threshold_val
+	img_copy = img_data[2].copy()
+	find_candles(threshold_val, img_data[1], img_copy)
 
-def flood_fill_trackbar(val):
-	global img, threshold_val, fill_diff_val
-	fill_diff_val = val
-	img_copy = img.copy()
-	find_candles(threshold_val, fill_diff_val, img_copy)
+def flood_fill_trackbar(flood_val):
+	global img_data
+	img_data[1] = flood_val
+	img_copy = img_data[2].copy()
+	find_candles(img_data[0], flood_val, img_copy)
 
 def threshold_brightest_spot(val, img):
 	img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
@@ -110,16 +110,15 @@ def noise_reduction(img):
 	return img
 
 # kepek betoltese
-img0 = cv2.imread("573px-Candles_in_the_church.jpg")
-img1 = cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")
-img2 = cv2.imread("640px-Candles_in_the_dark.jpg")
-img3 = cv2.imread("gyertyak.jpg")
-img4 = cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")
-img5 = cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")
-img6 = cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")
-img7 = cv2.imread("aroma-candles-500x500.jpg")
-img8 = cv2.imread("510557_shutterstock_540141442.jpg")
-img9 = cv2.imread("panoramio.jpg")
+img_data_0 = [4, 14, cv2.imread("573px-Candles_in_the_church.jpg")]
+img_data_1 = [14, 1, cv2.imread("640px-Basilique_Notre-Dame_Fourviere_crypte_reconnaissance_a_marie.jpg")]
+img_data_2 = [2, 1, cv2.imread("640px-Candles_in_the_dark.jpg")]
+img_data_3 = [3, 1, cv2.imread("gyertyak.jpg")]
+img_data_4 = [4, 1, cv2.imread("get-the-look-the-rustic-chic-table-c.jpg")]
+img_data_5 = [1, 8, cv2.imread("LibertePot_collection_2020_12x8_070720_1200x.jpg")]
+img_data_6 = [19, 5, cv2.imread("aak-tefacid-sustainable-stearic-acid-16x9-1500-matrix.jpg")]
+img_data_7 = [10, 2, cv2.imread("aroma-candles-500x500.jpg")]
+img_data_8 = [16, 15, cv2.imread("510557_shutterstock_540141442.jpg")]
 
 SHOW_CONTOURS = False # Konturok kirajzolasa az eredeti kepen
 ADD_SALT_PEPPER_NOISE = False # Noise hozzadasa a vizsgalando kephez
@@ -127,30 +126,19 @@ ADD_ADDITIVE_NOISE = False # Szinten
 SHOW_MASK = False # A talalt fenyek maszkja
 SHOW_BRIGHTEST_SPOTS = False # A legfenyesebb pontok kirajzolasa, ebbol lesz a maszk
 
-SHOW_TRACKBARS = False # Lehet a Threshold-ot es a Floodfill fuggveny bemeneti erteket allitani
+SHOW_TRACKBARS = True # Lehet a Threshold-ot es a Floodfill fuggveny bemeneti erteket allitani
 
 CONTOUR_COLOR = [255, 0, 255]
 CIRCLE_COLOR = [0, 255, 0]
 
-threshold_val = 0
-fill_diff_val = 0
 img = None
 
+img_data = img_data_0
+
+find_candles(img_data[0], img_data[1], img_data[2])
 if SHOW_TRACKBARS:
-	img = img8 # img0 modositasaval mas kepet lehet trackbar-okkal megjeleniteni
-	find_candles(threshold_val, fill_diff_val, img)
 	cv2.createTrackbar("threshold", "img", 0, 200, threshold_trackbar)
 	cv2.createTrackbar("value_diff", "img", 0, 50, flood_fill_trackbar)
-else: # valtoztatni lehet melyik kep jelenik meg, eloszor be KELL oket tolteni fentebb
-	#find_candles(4, 14, img0)
-	#find_candles(14, 1, img1)
-	#find_candles(2, 1, img2)
-	#find_candles(3, 1, img3)
-	#find_candles(4, 1, img4)
-	#find_candles(1, 8, img5)
-	#find_candles(19, 5, img6)
-	#find_candles(10, 2, img7)
-	find_candles(16, 15, img8)
 
 cv2.waitKey(0)
 
