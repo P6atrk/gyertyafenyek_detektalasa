@@ -133,8 +133,8 @@ img_data = img_data_0 # ITT LEHET MODOSITANI MILYEN KEPET KAP AZ ALGORITMUS
 
 find_candles(img_data[0], img_data[1], img_data[2])
 if SHOW_TRACKBARS:
-	cv2.createTrackbar("threshold", "img", 0, 200, threshold_trackbar)
-	cv2.createTrackbar("value_diff", "img", 0, 50, flood_fill_trackbar)
+	cv2.createTrackbar("threshold", "img", img_data[0], 200, threshold_trackbar)
+	cv2.createTrackbar("value_diff", "img", img_data[1], 50, flood_fill_trackbar)
 
 cv2.waitKey(0)
 
